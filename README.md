@@ -40,10 +40,10 @@ Content-Type: application/json
 
 {
   "username": "test-user-123",  // Optional, defaults to test-{timestamp}
-  "email": "test@workinpilot.space",  // Optional, defaults to username@internal-domain
+  "email": "test@example.com",  // Optional, defaults to username@internal-domain
   "firstName": "Test",  // Optional
   "lastName": "User",  // Optional
-  "password": "TestPass123!"  // Optional, auto-generated if not provided
+  "password": "YourTestPassword"  // Optional, auto-generated from config if not provided
 }
 ```
 
@@ -63,7 +63,7 @@ The test automatically uses configuration from your `.env` file:
 - `DEMO_STALWART_API_KEY_NAME` - Stalwart API key name (if using API key authentication)
 - `STALWART_CLIENT_ID` - Stalwart OIDC client ID (for OAuth token acquisition)
 - `STALWART_CLIENT_SECRET` - Stalwart OIDC client secret
-- `DEMO_INTERNAL_EMAIL_DOMAIN` - Internal email domain (defaults to `workinpilot.space`)
+- `DEMO_INTERNAL_EMAIL_DOMAIN` - Internal email domain (defaults to `example.com`)
 
 ### Optional Environment Variables
 
@@ -92,7 +92,7 @@ The test returns detailed results for each step:
       "success": true,
       "userId": "keycloak-user-id",
       "username": "test-user",
-      "email": "test@workinpilot.space",
+      "email": "test@example.com",
       "message": "User registered in Keycloak successfully"
     },
     "stalwartPredeploy": {
@@ -114,8 +114,8 @@ The test returns detailed results for each step:
     "sendEmail": {
       "success": true,
       "messageId": "<message-id>",
-      "to": "admin@workinpilot.site",
-      "cc": "test@workinpilot.space",
+      "to": "admin@example.com",
+      "cc": "test@example.com",
       "message": "Test email sent successfully"
     },
     "finalUnseenCount": {
@@ -217,8 +217,5 @@ This test is designed for:
 
 Potential improvements:
 
-- Add support for testing with Mailcow provider
-- Include NextCloud integration in the workflow
 - Add performance metrics (timing for each step)
-- Support for testing multiple users simultaneously
 - Export test results to file/format for CI/CD integration
