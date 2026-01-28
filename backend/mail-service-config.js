@@ -7,7 +7,7 @@
 
 class MailServiceConfig {
   constructor() {
-    this.provider = (process.env.DEMO_MAIL_PROVIDER || 'stalwart').toLowerCase();
+    this.provider = (process.env.DEMO_MAIL_PROVIDER || 'mailcow').toLowerCase();
     
     // Validate provider
     if (!['mailcow', 'stalwart'].includes(this.provider)) {
@@ -21,7 +21,7 @@ class MailServiceConfig {
 
   loadConfig() {
     if (this.provider === 'mailcow') {
-      this.loadMailcowConfig();
+      this.loadmailcowConfig();
     } else if (this.provider === 'stalwart') {
       this.loadStalwartConfig();
     }
@@ -55,37 +55,36 @@ class MailServiceConfig {
 
 
 
-  loadMailcowConfig() {
+  loadmailcowConfig() {
     // Generic variables first, fallback to mailcow-specific
     this.apiUrl = process.env.DEMO_MAIL_API_URL 
-      || process.env.DEMO_MAILCOW_API_URL 
-      || process.env.MAILCOW_API_URL 
-      || (process.env.MAILCOW_URL ? `${process.env.MAILCOW_URL.replace(/\/$/, '')}/api` : null)
+      || process.env.DEMO_mailcow_API_URL 
+      || process.env.mailcow_API_URL 
+      || (process.env.mailcow_URL ? `${process.env.mailcow_URL.replace(/\/$/, '')}/api` : null)
       || 'https://mail.workinpilot.space/api';
     
     this.apiToken = process.env.DEMO_MAIL_API_TOKEN
-      || process.env.DEMO_MAILCOW_API_TOKEN
-      || process.env.MAILCOW_API_KEY;
+      || process.env.DEMO_mailcow_API_TOKEN
+      || process.env.mailcow_API_KEY;
     
     this.smtpHost = process.env.DEMO_MAIL_SMTP_HOST
-      || process.env.MAILCOW_SMTP_HOST
+      || process.env.mailcow_SMTP_HOST
       || 'mail.workinpilot.space';
     
     this.smtpPort = parseInt(
       process.env.DEMO_MAIL_SMTP_PORT 
-      || process.env.MAILCOW_SMTP_PORT 
+      || process.env.mailcow_SMTP_PORT 
       || '587'
     );
     
     this.oidcClientId = process.env.DEMO_MAIL_OIDC_CLIENT_ID
-      || process.env.MAILCOW_CLIENT_ID
+      || process.env.mailcow_CLIENT_ID
       || 'mailcow-client';
     
     this.oidcClientSecret = process.env.DEMO_MAIL_OIDC_CLIENT_SECRET
-      || process.env.MAILCOW_CLIENT_SECRET;
+      || process.env.mailcow_CLIENT_SECRET;
     
-    this.baseUrl = process.env.STALWART_URL || process.env.MAILCOW_URL || 'https://mail.workinpilot.space';
-
+    this.baseUrl = process.env.mailcow_URL || 'https://mail.workinpilot.space';
   }
 
   loadStalwartConfig() {

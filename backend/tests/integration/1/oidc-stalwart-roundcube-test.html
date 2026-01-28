@@ -1039,7 +1039,7 @@ function getFinalUrl(win) {
                 testState.refreshToken = data.refreshToken;
                 testState.idToken = data.idToken;
 
-                const roundcubeUrl = config.webmailClient.clientUrl || 'https://webmailqa.workinpilot.cloud';
+                const roundcubeUrl = config.webmailClient.clientUrl || 'https://webmailserver.example.com';
                 const urlWithHint = roundcubeUrl + loginHint;
 //avoid cross site issues by accessing history for parm update
 //let webmailWindow = window.open(roundcubeUrl.toString(), '_self');
@@ -1061,7 +1061,7 @@ try{
 
 
   const msg = "login_hint="+testState.testUsername;
-  const targetOrigin = 'https://secure.workinpilot.cloud';
+  const targetOrigin = 'https://roundcube-keycloak-idp.example.com';
 
 if (webmailWindow === null) {
     console.error("Unable to load webmail window.  Are popups blocked?");
@@ -1079,8 +1079,8 @@ kcWindow.addEventListener('load', () => {
 });
 
 function postTheUname(){
-try {  webmailWindow.postMessage(msg, 'https://web.workinpilot.cloud'); } catch (e){console.log("I am on test page!");}
-try {  webmailWindow.postMessage(msg, 'https://secure.workinpilot.cloud'); } catch (e){console.log("I am on keycloak page!");}
+try {  webmailWindow.postMessage(msg, 'https://your-demo.example.com'); } catch (e){console.log("I am on test page!");}
+try {  webmailWindow.postMessage(msg, 'https://roundcube-keycloak-idp.example.com'); } catch (e){console.log("I am on keycloak page!");}
 }
 
 window.addEventListener('message', event => {
@@ -1142,7 +1142,7 @@ postTheUname();
                  token_type: 'Bearer',
                  expires_in: '3600' // Assume 1 hour
              });
-const rcAuthUrl = "https://webmail.workinpilot.cloud/index.php/login/oauth";
+const rcAuthUrl = "https://webmailexample.com/index.php/login/oauth";
 //            const authUrl = new URL(config.webmailClient.keycloakAuthUrl);
             const authUrl = new URL(rcAuthUrl);
             const state = Math.random().toString(36).substring(2, 15);

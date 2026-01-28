@@ -159,8 +159,6 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 
-# Ignore local quiz repo clone
-linkedin-skill-assessments-quizzes/
 cypress-terminal-report/
 backend/*.sqlite
 src/data/preparsed.json

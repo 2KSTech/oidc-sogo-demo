@@ -2,16 +2,16 @@
 
 echo "INFO: Starting WorkInPilot Keycloak-Stalwart-SOGo SSO Demo..."
 
-# Check if backend is running
-#if pgrep -f "node server.js" > /dev/null; then
-#    echo "WARN:  Backend server is already running"
-#fi
+Check if backend is running
+if pgrep -f "node server.js" > /dev/null; then
+   echo "WARN:  Backend server is already running server.js"
+fi
 
 # Check if backend (3010) is listening
 if lsof -PiTCP -sTCP:LISTEN -n | grep ':3010 ' >/dev/null; then
-    echo "WARN:  Backend server is already running"
+    echo "WARN: Backend server is already running"
 else
-    echo "🔧 Starting backend server..."
+    echo " Starting backend server..."
     cd backend
     npm start &
     cd ..

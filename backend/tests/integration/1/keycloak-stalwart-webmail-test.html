@@ -211,7 +211,7 @@
 				const response = await fetch(`${API_BASE}/test/oidc-stalwart/config`, { credentials: 'include' });
 				const data = await response.json();
 				document.getElementById('roundcube-url').textContent =
-					data.roundcubeUrl || 'https://webmailqa.workinpilot.cloud (default)';
+					data.roundcubeUrl || 'https://webmailserver.example.com (default)';
 				log('success', 'Configuration loaded.');
 			} catch (err) {
 				log('error', `Failed to load configuration: ${err.message}`);

@@ -7,13 +7,13 @@ const tokenService = require('../services/tokenService');
 const router = express.Router();
 
 // Service base URLs derived from environment, avoiding hardcoded domains
-const internalDomain = process.env.WORKINPILOT_INTERNAL_EMAIL_DOMAIN || 'workinpilot.space';
+const internalDomain = process.env.DEMO_INTERNAL_EMAIL_DOMAIN || 'workinpilot.space';
 const nextcloudBase = process.env.NEXTCLOUD_URL;
 const mailBase = process.env.MAILCOW_URL;
 
 // Admin helper function
 const checkIsAdmin = (req) => {
-  const adminUsername = process.env.WORKINPILOT_ADMIN_USERNAME || 'sysadmin';
+  const adminUsername = process.env.DEMO_ADMIN_USERNAME || 'sysadmin';
   return req.user?.username === adminUsername;
 };
 
@@ -146,7 +146,7 @@ router.get('/mail', async (req, res) => {
   console.log(`[auth.js - mail] ${providerLabel} ${isSetupRequest ? 'setup' : 'access'} initiated for user:`, req.user.username);
   console.log(`[auth.js - mail] Webmail client: ${webmailClientLabel} (${webmailClientName})`);
   
-  const intEmailDomain = process.env.WORKINPILOT_INTERNAL_EMAIL_DOMAIN || 'workinpilot.space';
+  const intEmailDomain = process.env.DEMO_INTERNAL_EMAIL_DOMAIN || 'workinpilot.space';
   const userEmail = `${req.user.username}@${intEmailDomain}`;
   req.user.email = userEmail;
   

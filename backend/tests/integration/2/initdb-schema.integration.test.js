@@ -33,7 +33,7 @@ describe('init_db.py end-to-end schema (temp DB file)', () => {
 
     const result = spawnSync('python3', ['init_db.py'], {
       cwd: backendDir,
-      env: { ...process.env, WORKINPILOT_DB_PATH: dbPath },
+      env: { ...process.env, DEMO_DB_PATH: dbPath },
       encoding: 'utf-8'
     });
     if (result.error) throw result.error;

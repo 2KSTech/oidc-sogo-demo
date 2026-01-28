@@ -14,10 +14,10 @@ describe('Stalwart API Endpoint Verification', () => {
   let http;
 
   beforeAll(() => {
-    apiBaseUrl = process.env.WORKINPILOT_MAIL_API_URL 
-      || process.env.WORKINPILOT_STALWART_API_URL 
+    apiBaseUrl = process.env.DEMO_MAIL_API_URL 
+      || process.env.DEMO_STALWART_API_URL 
       || (process.env.STALWART_URL ? `${process.env.STALWART_URL.replace(/\/$/, '')}/api` : null)
-      || 'https://mailqa.workinpilot.cloud/api';
+      || 'https://mailserver.example.com/api';
     
     const apiKeyName = process.env.STALWART_API_KEY_NAME;
     const apiKeyToken = process.env.STALWART_API_KEY_AUTH_BEARER_TOKEN;
@@ -25,8 +25,8 @@ describe('Stalwart API Endpoint Verification', () => {
       const cleanToken = apiKeyToken.replace(/^api_/, '');
       apiToken = `api_${apiKeyName}:${cleanToken}`;
     } else {
-      apiToken = process.env.WORKINPILOT_MAIL_API_TOKEN 
-        || process.env.WORKINPILOT_STALWART_API_TOKEN;
+      apiToken = process.env.DEMO_MAIL_API_TOKEN 
+        || process.env.DEMO_STALWART_API_TOKEN;
     }
 
     const authHeader = apiToken 

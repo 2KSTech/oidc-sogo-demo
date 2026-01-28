@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const path = require('path');
 const cors = require('cors');
-const fileUpload = require('express-fileupload');
 const fs = require('fs');
 const { spawn } = require('child_process');
 
@@ -76,16 +75,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false, limit: '10mb' }));
 app.use(bodyParser.json({ limit: '10mb' }));
 
-// File upload middleware
-app.use(fileUpload({
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
-  abortOnLimit: true,
-  responseOnLimit: 'File size limit has been reached'
-}));
-
 // Session configuration
-// For same-domain subdomains (e.g., webqa.workinpilot.cloud and workinpilot.cloud),
-// set domain to '.workinpilot.cloud' to allow cookies across subdomains
+// For same-domain subdomains (e.g., demo.example.com and workinpilot.cloud),
+// set domain to 'example.com' to allow cookies across subdomains
 app.use(session({
   secret: process.env.SESSION_SECRET || 'your-secret-key',
   resave: false,
@@ -97,8 +89,8 @@ app.use(session({
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
     // sameSite: 'lax', // Allow cross-site requests but maintain CSRF protection
     // Set domain to parent domain to allow cookies across subdomains
-    // Example: '.workinpilot.cloud' allows cookies on workinpilot.cloud, webqa.workinpilot.cloud, etc.
-    // domain: process.env.SESSION_COOKIE_DOMAIN || undefined // e.g., '.workinpilot.cloud'
+    // Example: 'example.com' allows cookies on workinpilot.cloud, demo.example.com, etc.
+    // domain: process.env.SESSION_COOKIE_DOMAIN || undefined // e.g., 'example.com'
   }
 }));
 

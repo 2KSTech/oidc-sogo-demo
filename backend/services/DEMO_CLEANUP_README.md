@@ -3,7 +3,7 @@
 1. **`backend/services/demo-session-cleanup-daemon.js`** — Main daemon that:
    - Scans all Keycloak users periodically
    - Checks each user's `createdTimestamp` from Keycloak Admin API
-   - Connects to Roundcube DB (MariaDB) or SOGo DB (Postgres) based on `WORKINPILOT_SSO_MAIL_CLIENT_NAME`
+   - Connects to Roundcube DB (MariaDB) or SOGo DB (Postgres) based on `DEMO_SSO_MAIL_CLIENT_NAME`
    - Expires users older than `DEMO_MAX_SESSION_DURATION_MIN` minutes
    - Deletes in order: Keycloak → Stalwart → Webmail DB
    - Handles graceful shutdown (expires all sessions on SIGTERM/SIGINT)
@@ -36,8 +36,8 @@ npm install mysql2
 The daemon uses these environment variables:
 - `DEMO_MAX_SESSION_DURATION_MIN` (default: 15 minutes)
 - `DEMO_CLEANUP_INTERVAL_MS` (default: 60000ms = 1 minute)
-- `WORKINPILOT_SSO_MAIL_CLIENT_NAME` (sogo or roundcube)
-- `WORKINPILOT_MAIL_PROVIDER` (stalwart)
+- `DEMO_SSO_MAIL_CLIENT_NAME` (sogo or roundcube)
+- `DEMO_MAIL_PROVIDER` (stalwart)
 - `ROUNDCUBE_DB_*` vars (for Roundcube)
 - `SOGO_DB_*` vars (for SOGo, already configured)
 

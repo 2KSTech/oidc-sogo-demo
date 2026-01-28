@@ -21,7 +21,7 @@
     <input type="text" id="predeploy-username" placeholder="username" value="testuser">
     <input type="text" id="predeploy-domain" placeholder="domain" value="workinpilot.space">
     <input type="text" id="predeploy-api-key" placeholder="Management API Key (Bearer token)">
-    <input type="text" id="predeploy-api-url" placeholder="API URL" value="https://mailqa.workinpilot.cloud/api">
+    <input type="text" id="predeploy-api-url" placeholder="API URL" value="https://mailserver.example.com/api">
     <button onclick="predeploy()">Pre-deploy Account</button>
     <div id="predeploy-result" class="result"></div>
   </div>
@@ -30,7 +30,7 @@
     <h2>2. You've Got Mail Counter (JMAP)</h2>
     <p>Get unread email count via JMAP</p>
     <input type="text" id="jmap-user-token" placeholder="User OAuth Access Token (from Keycloak)">
-    <input type="text" id="jmap-base-url" placeholder="Base URL" value="https://mailqa.workinpilot.cloud">
+    <input type="text" id="jmap-base-url" placeholder="Base URL" value="https://mailserver.example.com">
     <button onclick="getUnreadCount()">Get Unread Count</button>
     <div id="jmap-result" class="result"></div>
   </div>
@@ -40,7 +40,7 @@
     <p>Send email via SMTP (test OAuth/XOAUTH2 if available)</p>
     <input type="text" id="smtp-to" placeholder="To email" value="testuser@workinpilot.space">
     <input type="text" id="smtp-from" placeholder="From email" value="mailadmin@workinpilot.space">
-    <input type="text" id="smtp-host" placeholder="SMTP Host" value="mailqa.workinpilot.cloud">
+    <input type="text" id="smtp-host" placeholder="SMTP Host" value="mailserver.example.com">
     <input type="text" id="smtp-port" placeholder="SMTP Port" value="587">
     <input type="text" id="smtp-token" placeholder="OAuth Token (optional, for XOAUTH2)">
     <button onclick="sendMail()">Send Mail</button>

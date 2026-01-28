@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "INFO: Setting up  App..."
+echo "INFO: Setting up Demo App..."
 
 # Check if Node.js is installed
 if ! command -v node &> /dev/null; then
