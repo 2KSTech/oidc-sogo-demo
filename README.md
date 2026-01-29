@@ -1,10 +1,10 @@
-# Keycloak→Stalwart→SOGo OIDloDemo
+# Keycloak→Stalwart→SO OIDC Demo
 
 ## Overview
 
 This demo derives from a test page developed to provide a comprehensive, 
-self-contained test of the complete Keycloak→Stalwart→SOGo OID
-C registration and mail service integration workflow. 
+self-contained test of the complete Keycloak→Stalwart→SOGo OC
+registration and mail service integration workflow. 
 
 It verifies that all components work together correctly, and can be used
 to test OIDC configuration  on a new service host.
@@ -36,14 +36,18 @@ using the docker exec command (to login to SOGo to tune cron jobs or perform ad 
 Assuming you have setup apache or other web server reverse forwarding of the normal webapp ports (see Deployment doc), you can navigate to:
 ```
 http://your-backend-url/
+```
 or
+```
 http://your-backend-url/test/test
 ```
 
 Or if running locally:
 ```
 http://localhost:3010/
+```
 or
+```
 http://localhost:3010/test
 ```
 
