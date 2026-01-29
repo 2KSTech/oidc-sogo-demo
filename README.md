@@ -1,8 +1,13 @@
-# Keycloak→Stalwart→SOGo OIDC WorkfloDemo
+# Keycloak→Stalwart→SOGo OIDloDemo
 
 ## Overview
 
-This test suite provides a comprehensive, self-contained test for the complete Keycloak→Stalwart→SOGo OIDC registration and mail service integration workflow. It verifies that all components work together correctly on a new service host.
+This demo derives from a test page developed to provide a comprehensive, 
+self-contained test of the complete Keycloak→Stalwart→SOGo OID
+C registration and mail service integration workflow. 
+
+It verifies that all components work together correctly, and can be used
+to test OIDC configuration  on a new service host.
 
 ## Test Workflow
 
@@ -14,20 +19,32 @@ The test executes the following steps in sequence:
 4. **Get initial unseen count** - Retrieves the initial unseen email count for the test user
 5. **Send test email** - Sends an email via  XOAUTH2 protocol to the test user
 6. **Check unseen count increment** - Verifies that the unseen count increased after sending the email
-7. **Cleanup** - Deletes the test user from both Keycloak and Stalwart
+7. **Login** - Press the "SOGo" button on the demo page to login the test user.  This  does a first-time SOGo OIDC registration, and opens the user's SOGo welcome page.
+8. **Cleanup** - The demo expires the user registration shortly after the test begins, to avoid session persistence.  It simply deletes the test account from Keycloak, Stalwart, and SOGo databases.
+
+This is a demo test app, so it should not be used for any long-lived purpose beside modeling.  
+if the volume of new users created is more than 10 or 20, is is best to undertake occasional 
+cleanup of the SOGo environment, using the tools provided by the app (e.g. sogo-tool).
+
+For longer term operation of this demo app, it will be advisable to access the SOGo environment
+using the docker exec command (to login to SOGo to tune cron jobs or perform ad hoc maintenance operations).
 
 ## Accessing the Test
 
 ### Web Interface
 
-Navigate to:
+Assuming you have setup apache or other web server reverse forwarding of the normal webapp ports (see Deployment doc), you can navigate to:
 ```
-http://your-backend-url/test/keycloak-stalwart-workflow
+http://your-backend-url/
+or
+http://your-backend-url/test/test
 ```
 
 Or if running locally:
 ```
-http://localhost:3010/test/keycloak-stalwart-workflow
+http://localhost:3010/
+or
+http://localhost:3010/test
 ```
 
 ### API Endpoint
@@ -63,21 +80,22 @@ The test automatically uses configuration from your `.env` file:
 - `DEMO_STALWART_API_KEY_NAME` - Stalwart API key name (if using API key authentication)
 - `STALWART_CLIENT_ID` - Stalwart OIDC client ID (for OAuth token acquisition)
 - `STALWART_CLIENT_SECRET` - Stalwart OIDC client secret
+- `STALWART_URL` - Stalwart base URL (used if API URL not explicitly set)
+- `STALWART_SMTP_HOST` - SMTP host for sending emails
+- `STALWART_SMTP_PORT` - SMTP port (defaults to 587)
 - `DEMO_INTERNAL_EMAIL_DOMAIN` - Internal email domain (defaults to `example.com`)
 
 ### Optional Environment Variables
 
-- `STALWART_URL` - Stalwart base URL (used if API URL not explicitly set)
-- `STALWART_SMTP_HOST` - SMTP host for sending emails
-- `STALWART_SMTP_PORT` - SMTP port (defaults to 587)
 
 ## Mail Service Abstraction
 
 The test uses the mail service abstraction layer (`mail-service-abstraction.js`) which:
 
-- Automatically selects the configured mail provider (Stalwart or Mailcow)
+- Automatically selects the configured mail provider (Stalwart or Mailcow - always Stalwart in this case)
 - Uses the appropriate service implementation based on `DEMO_MAIL_PROVIDER`
-- Provides a unified interface for all mail operations
+- Selects the configured mail webclient (in this case SOGo)
+- Provides a unified interface for mail operations
 
 ## Test Results
 
