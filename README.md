@@ -1,9 +1,9 @@
-# Keycloak→Stalwart→SO OIDC Demo
+# Keycloak-Stalwart-SOGo
 
-## Overview
+## OIDC Demo - Overview
 
 This demo derives from a test page developed to provide a comprehensive, 
-self-contained test of the complete Keycloak→Stalwart→SOGo OC
+self-contained test of the complete Keycloak-Stalwart-SOGo OIDC 
 registration and mail service integration workflow. 
 
 It verifies that all components work together correctly, and can be used
