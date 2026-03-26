@@ -345,7 +345,7 @@ class DemoSessionCleanupDaemon {
             this.stats.totalErrors += errors;
             this.lastCleanupTime = new Date();
 
-            console.log(`[DemoSessionCleanupDaemon] 🏁 Cleanup cycle complete:`);
+            console.log(`[DemoSessionCleanupDaemon]  Cleanup cycle complete:`);
             console.log(`  - Users scanned: ${keycloakUsers.length}`);
             console.log(`  - Users expired: ${expired}`);
             console.log(`  - Users deleted: ${deleted}`);
