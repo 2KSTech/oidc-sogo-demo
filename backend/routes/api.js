@@ -7,18 +7,13 @@ const SMTPConnection = require('smtp-connection');
 const fs = require('fs');
 const path = require('path');
 const mime = require('mime-types');
-
-// Import training search routes
-// const trainingSearchRoutes = require('./training-search');
 const https = require('https');
 const http = require('http');
 const PDFDocument = require('pdfkit');
 const mailServiceConfig = require('../config/mail-service-config');
 const mailService = require('../services/email/mail-service-abstraction');
 
-
 const { spawn } = require('child_process');
-// const jaScheduler = require('../services/jaScheduler');
 
 function splitTitleAndBodyFromAi(rawText) {
   if (!rawText || typeof rawText !== 'string') return { title: null, body: '' };
@@ -153,10 +148,6 @@ router.get('/emails/defaults-broke', ensureAuthenticated, async (req, res) => {
 });
 
 
-
-//
-//
-//
 function getRemainingTime(token) {
     // Extract the expires-at claim from the ID token JWT
     const expiresAtClaim = token.payload.expires_at;
@@ -169,9 +160,6 @@ function getRemainingTime(token) {
 
     return remainingTimeSeconds;
 }
-//
-
-
 
 
 // Get email send defaults
@@ -202,7 +190,6 @@ router.get('/emails/defaults', ensureAuthenticated, async (req, res) => {
       }
     } else {
       // For Stalwart, check if OAuth token is available
-
       const tokenService = require('../services/tokenService');
       const accessToken = await tokenService.getValidAccessToken(req.user.keycloak_id, req.session);
 
@@ -239,9 +226,6 @@ router.get('/emails/defaults', ensureAuthenticated, async (req, res) => {
 });
 
 
-
-
-
 // REMOVE ME -- MailCow: pure verification only (no DB writes, no proxy config)
 // Mail service: pure verification only (no DB writes, no proxy config)
 // Provider-agnostic endpoint - uses abstraction layer
@@ -263,8 +247,6 @@ router.post('/mail/verify-only', ensureAuthenticated, async (req, res) => {
     return res.status(500).json({ success: false, message: 'Mailbox verification error', error: error.message });
   }
 });
-
-
 
 
 // System stats endpoint for admin dashboard
@@ -340,9 +322,6 @@ router.get('/system-stats', ensureAuthenticated, async (req, res) => {
   }
 });
 
-// === RSS Feed Endpoints ===
-
-
 module.exports = router;
 
 
@@ -358,9 +337,7 @@ router.post('/mail/unseen-replaced', ensureAuthenticated, async (req, res) => {
     const mailService = require('../services/email/mail-service-abstraction');
     const mailServiceConfig = require('../config/mail-service-config');
     
-//    // Try abstraction layer first
-//    if (mailService.isConfigured() && mailServiceConfig.getProvider() !== 'mailcow') {
-//      // For Stalwart, try to get access token from session/user
+    // Try abstraction layer first
     // Always try abstraction layer first (works for both mailcow and stalwart)
     if (mailService.isConfigured()) {
       // Try to get access token from session/user (needed for Stalwart/JMAP)
@@ -386,7 +363,6 @@ router.post('/mail/unseen-replaced', ensureAuthenticated, async (req, res) => {
       }
     }
 
-//    // Fallback to mail-notifier service (for Mailcow or if abstraction fails)
     // Fallback to mail-notifier service (only for Mailcow if abstraction not configured)
     const mailServiceUrl = process.env.MAIL_NOTIFIER_API_URL || 'http://workinpilot.space:8083';
     const timeout = parseInt(process.env.MAIL_NOTIFIER_TIMEOUT_MS || '5000', 10);
@@ -421,7 +397,6 @@ router.post('/mail/unseen-replaced', ensureAuthenticated, async (req, res) => {
 });
 
 
-
 // Mail notification routes
 router.post('/mail/unseen', ensureAuthenticated, async (req, res) => {
   try {
@@ -450,7 +425,6 @@ router.post('/mail/unseen', ensureAuthenticated, async (req, res) => {
       console.log('[mail/unseen] req.user.accessToken', req.user.accessToken);
 
       // For Stalwart, try to get access token from session/user/database
-
 
       const tokenService = require('../services/tokenService');
       let accessToken = await tokenService.getValidAccessToken(req.user.keycloak_id, req.session);
@@ -603,17 +577,6 @@ router.get('/mail/users/status', ensureAuthenticated, async (req, res) => {
   }
 });
 
-
-/*
- *
- *
- *
- *
- *
- *
- *
- *
-*/
 
 /**
  * GET /api/test/oidc-stalwart/config
@@ -2181,43 +2144,20 @@ router.post('/test/impersonate-user', async (req, res) => {
       });
     }
 
-    // BOT STUPIDOSITY:
-
-/*    const clientSecrets = {
-      'stalwart-client': process.env.STALWART_CLIENT_SECRET,
-      'roundcube-client': process.env.KEYCLOAK_SSO_MAIL_CLIENT_SECRET
-    };
-
-    // MORE BOT STUPIDOSITY
-    const targetClientSecret = clientSecrets[targetClientId];
-    if (!targetClientSecret) {
-      return res.status(400).json({
-        success: false,
-        error: `Unsupported or unconfigured targetClientId: ${targetClientId}`
-      });
-    }
-*/
     const stalwartService = require('../services/email/stalwart-service');
 
     console.log(`[api/test/impersonate-user] Impersonating ${username} for ${targetClientId}...`);
 
     const startingClientId = process.env.STALWART_CLIENT_ID;
     const startingClientSecret = process.env.STALWART_CLIENT_SECRET;
-
-//    const result = await stalwartService.impersonateUserForClient(username, targetClientId, targetClientSecret);
-//    const result = await stalwartService.impersonateUserForClient(username, startingClientId, startingClientSecret, targetClientId);
-    const result = await stalwartService.getWebmailClientTokenViaDAG(username,'seK#rit123');
+    const result = await stalwartService.getWebmailClientTokenViaDAG(username, process.env.WEBMAIL_DEMO_PASSWORD);
 
     if (result.success) {
       console.log(`[api/test/impersonate-user] SUCCESS Impersonation successful for ${username}`);
       res.json({
         success: true,
         username,
-//        targetClientId,
         accessToken: result.accessToken,
-//        refreshToken: result.refreshToken,
-//        idToken: result.idToken,
-//        expiresIn: result.expiresIn
       });
     } else {
       console.error(`[api/test/impersonate-user] FAIL Impersonation failed:`, result.error);
