@@ -681,18 +681,6 @@
             }
         }
         async function step1b_performMailboxSetupVerification(username, email, password) {
-            // // Store original button state for potential reset
-            // if (!btn.getAttribute('data-original-text')) {
-            //     btn.setAttribute('data-original-text', btn.textContent);
-            // }
-
-            // // Disable button and show loading state
-            // btn.disabled = true;
-            // btn.classList.add('loading');
-            // btn.innerHTML = 'Authenticating...';
-
-            // Start progress animation for step 2
-            //            const operationPromise = fetch('/auth/mail', { 
             const operationPromise = fetch('/auth/mail?setup=true', {
                 method: 'GET',
                 redirect: 'manual' // Don't follow redirects
@@ -700,21 +688,9 @@
                 .then(response => {
                     // Check if we got a successful response (200) or redirect (302/303)
                     if (response.status === 200 || response.status === 302 || response.status === 303) {
-                        // Auth was successful - update UI
-                        // btn.classList.remove('loading');
-                        // document.getElementById('chkMail').checked = true;
-                        // refreshState();
-                        // btn.innerHTML = '<i class="fas fa-envelope me-2"></i>Mail Access Enabled';
-                        // btn.classList.remove('btn-primary');
-                        // btn.classList.add('btn-success');
-                        // btn.classList.add('step-completed');
-                        // setTimeout(() => btn.classList.remove('step-completed'), 600);
                         console.log('Mailbox verification successful');
                     } else {
                         // Auth failed
-                        // btn.disabled = false;
-                        // btn.classList.remove('loading');
-                        // btn.innerHTML = btn.getAttribute('data-original-text') || '<i class="fas fa-envelope me-2"></i>Enable Mail Access';
                         alert('Failed to verify mailbox access. Please try again.');
                         console.error('Mailbox setup verification failed with status:', response.status);
                         throw new Error(`Mailbox setup verification failed with status: ${response.status}`);
@@ -722,9 +698,6 @@
                 })
                 .catch(error => {
                     // Error - restore button state
-                    // btn.disabled = false;
-                    // btn.classList.remove('loading');
-                    // btn.innerHTML = btn.getAttribute('data-original-text') || '<i class="fas fa-envelope me-2"></i>Enable Mail Access';
                     alert('Error verifying mailbox access. Please try again.');
                     console.error('Mailbox setup verification error:', error);
                     throw error;
@@ -732,18 +705,6 @@
         }
 
         async function step1a_performMailboxSetupVerification(username, email, password) {
-            // // Store original button state for potential reset
-            // if (!btn.getAttribute('data-original-text')) {
-            //     btn.setAttribute('data-original-text', btn.textContent);
-            // }
-
-            // // Disable button and show loading state
-            // btn.disabled = true;
-            // btn.classList.add('loading');
-            // btn.innerHTML = 'Authenticating...';
-
-            // Start progress animation for step 2
-            //            const operationPromise = fetch('/auth/mail', { 
             const operationPromise = fetch('/auth/mail?setup=true', {
                 method: 'GET',
                 redirect: 'manual' // Don't follow redirects
@@ -752,20 +713,9 @@
                     // Check if we got a successful response (200) or redirect (302/303)
                     if (response.status === 200 || response.status === 302 || response.status === 303) {
                         // Auth was successful - update UI
-                        // btn.classList.remove('loading');
-                        // document.getElementById('chkMail').checked = true;
-                        // refreshState();
-                        // btn.innerHTML = '<i class="fas fa-envelope me-2"></i>Mail Access Enabled';
-                        // btn.classList.remove('btn-primary');
-                        // btn.classList.add('btn-success');
-                        // btn.classList.add('step-completed');
-                        // setTimeout(() => btn.classList.remove('step-completed'), 600);
                         console.log('Mailbox verification successful');
                     } else {
                         // Auth failed
-                        // btn.disabled = false;
-                        // btn.classList.remove('loading');
-                        // btn.innerHTML = btn.getAttribute('data-original-text') || '<i class="fas fa-envelope me-2"></i>Enable Mail Access';
                         alert('Failed to verify mailbox access. Please try again.');
                         console.error('Mailbox setup verification failed with status:', response.status);
                         throw new Error(`Mailbox setup verification failed with status: ${response.status}`);
@@ -773,9 +723,6 @@
                 })
                 .catch(error => {
                     // Error - restore button state
-                    // btn.disabled = false;
-                    // btn.classList.remove('loading');
-                    // btn.innerHTML = btn.getAttribute('data-original-text') || '<i class="fas fa-envelope me-2"></i>Enable Mail Access';
                     alert('Error verifying mailbox access. Please try again.');
                     console.error('Mailbox setup verification error:', error);
                     throw error;
@@ -817,7 +764,7 @@
 
             const btn = document.getElementById('btn-go');
             btn.disabled = true;
-            btn.textContent = '⏳ Running...';
+            btn.textContent = 'Running...';
 
             try {
                 log('info', `Starting workflow for user: ${username} (${email})`);
